@@ -1,8 +1,8 @@
 # frozen_string_literal: true
-
+# 
 module Api
   module V1
-    class Api::V1::AuthenticationController < ApplicationController
+    class AuthenticationController < ApplicationController
       skip_before_action :authorize_request
       wrap_parameters false
     
