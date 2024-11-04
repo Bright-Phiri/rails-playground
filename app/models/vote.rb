@@ -12,6 +12,6 @@ class Vote < ApplicationRecord
   private
 
   def broadcast_vote_counts
-    BroadcastVoteCountsJob.perform_later(self.election.id)
+    BroadcastVoteCountsJob.perform_later(election.id)
   end
 end

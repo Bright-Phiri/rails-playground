@@ -6,5 +6,7 @@ class Candidate < VoidableRecord
   belongs_to :election, counter_cache: true
   has_many :votes, dependent: :destroy
 
+  attr_readonly :votes_count
+
   validates :name, presence: true, uniqueness: { case_sensitive: false }
 end
