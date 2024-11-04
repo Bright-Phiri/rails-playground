@@ -10,14 +10,4 @@ module CandidateService
   
     election.candidates.create(params.merge(position_id: position.id))
   end
-
-  def self.update_candidate(candidate, params)
-    candidate.avatar.purge if params[:avatar].present?
-    candidate.update(params)
-  end
-
-  def self.destroy_candidate(candidate)
-    candidate.avatar.purge
-    candidate.destroy!
-  end
 end
