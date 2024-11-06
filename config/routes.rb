@@ -19,6 +19,9 @@ Rails.application.routes.draw do
       resources :voters, except: :create do
         post 'register', on: :collection
       end
+      resources :users, except: :create do
+        post 'register', on: :collection
+      end
     end
   end
 end
