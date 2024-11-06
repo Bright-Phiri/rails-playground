@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-# 
+
 module Api
   module V1
     class AuthenticationController < ApplicationController
@@ -7,27 +7,25 @@ module Api
       wrap_parameters false
     
       def login
-        if Voter.exists?
-          voter = Voter.find_by(email: voter_params[:email])
-          raise InvalidUsername unless voter.present?
-    
-          authenticate_voter(voter)
-        else
-          render_not_found 'No voter account found'
-        end
+        user = User.find_by(email: login_params[:email])
+        
+        account = user || Voter.find_by(email: login_params[:email])
+        raise InvalidUsername unless account.present?
+
+        authenticate_account(account)
       end
     
       private
     
-      def authenticate_voter(voter)
-        raise InvalidCredentials unless voter.authenticate(voter_params[:password])
-    
-        token = encode_token({ email: voter.email, exp: 24.hours.from_now.to_i })
-    
-        render_ok({ voter: voter, token: token }, 'Access granted')
+      def authenticate_account(account)
+        raise InvalidCredentials unless account.authenticate(login_params[:password])
+
+        token = encode_token({ email: account.email, type: account.class.name, exp: 24.hours.from_now.to_i })
+
+        render_ok({ account: account, token: token }, 'Access granted')
       end
     
-      def voter_params
+      def login_params
         params.permit(:email, :password)
       end
     end
