@@ -4,7 +4,7 @@ module Api
   module V1
     class CandidatesController < ApplicationController
       wrap_parameters false
-      before_action :set_candidate, only: [:show, :update, :destroy]
+      before_action :set_candidate, only: %i[show update destroy]
     
       def create
         candidate = CandidateService.create_candidate(candidate_params, params[:election_id])

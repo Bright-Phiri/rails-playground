@@ -4,8 +4,8 @@ module Api
   module V1
     class UsersController < ApplicationController
       wrap_parameters false
-      before_action :set_user, only: [:show, :update, :destroy]
-      skip_before_action :authorize_request, only: [:register]
+      before_action :set_user, only: %i[show update destroy]
+      skip_before_action :authorize_request, only: :register
 
       def index
         users = User.all

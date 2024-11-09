@@ -4,7 +4,7 @@ module Api
   module V1
     class PositionsController < ApplicationController
       wrap_parameters false
-      before_action :set_position, only: [:show, :update, :destroy]
+      before_action :set_position, only: %i[show update destroy]
     
       def index
         positions = Position.all

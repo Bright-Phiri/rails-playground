@@ -12,23 +12,25 @@ class ApplicationController < ActionController::API
     JWT.encode(payload, hmac_secret)
   end
 
-  def logged_in?
-    logged_in_user.present?
-  end
-
-  def logged_in_user
-    return unless decoded_token
-    
-    voter_email = decoded_token[0]['email']
-    Voter.find_by(email: voter_email)
-  end
-
   def authorize_request
-    if auth_header.blank?
-      render_unauthorized 'Token missing'
-    else
-      render_unauthorized 'Invalid token format' and return unless auth_header.starts_with?('Bearer ')
-      render_unauthorized 'Unauthorized: Invalid or expired token' unless logged_in?
+    token = auth_header.split(' ').last if auth_header
+  
+    decoded_token = decode_token(token)
+  
+    email = decoded_token[0]['email'] if decoded_token
+    account_type = decoded_token[0]['type'] if decoded_token
+  
+    user = case account_type
+           when 'User'
+             User.find_by(email: email)
+           when 'Voter'
+             Voter.find_by(email: email)
+           else
+             nil
+           end
+    unless user
+      render json: { error: 'Unauthorized' }, status: :unauthorized
+      return
     end
   end
 
@@ -40,11 +42,6 @@ class ApplicationController < ActionController::API
     JWT.decode(token, hmac_secret, true, { algorithm: 'HS256' })
   rescue JWT::DecodeError
     nil
-  end
-
-  def decoded_token
-    token = auth_header.split(' ')[1]
-    decode_token(token)
   end
 
   def render_unauthorized(message)

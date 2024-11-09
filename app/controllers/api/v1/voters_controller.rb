@@ -4,8 +4,8 @@ module Api
   module V1
     class VotersController < ApplicationController
       wrap_parameters false
-      before_action :set_voter, only: [:show, :update, :destroy]
-      skip_before_action :authorize_request, only: [:register, :show, :update]
+      before_action :set_voter, only: %i[show update destroy]
+      skip_before_action :authorize_request, only: %i[register show update]
     
       def index
         voters = Voter.with_voided
