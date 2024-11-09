@@ -222,7 +222,7 @@ DEPENDENCIES
   error_highlight (>= 0.4.0)
   jwt
   pg (~> 1.1)
-  puma (>= 5.0)
+  puma (~> 6.0)
   rack-cors
   rails (~> 8.0.0)
   shutup (~> 0.1.2)
