@@ -8,8 +8,6 @@ class Election < ApplicationRecord
 
   enum :status, { open: 0, closed: 1 }, suffix: true, default: :open
 
-  attr_readonly :candidates_count, :votes_count
-
   validates :name, presence: true, uniqueness: { case_sensitive: false, scope: :year, message: 'must be unique for each year' }
   validates :year, :start_time, :end_time, presence: true
 

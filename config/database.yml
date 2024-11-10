@@ -8,9 +8,19 @@ default: &default
   username: postgres
   password: root
 
+
 development:
-  <<: *default
-  database: voting_system_api_development
+  primary:
+    <<: *default
+    database: voting_system_api_development
+  queue:
+    <<: *default
+    database: voting_system_api_development_queue
+    migrations_paths: db/queue_migrate
+  cable:
+    <<: *default
+    database: voting_system_api_development_cable
+    migrations_paths: db/cable_migrate
 
 test:
   <<: *default
