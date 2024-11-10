@@ -1,6 +1,6 @@
-development:
-  broadcast_votes_count:
-    class: BroadcastVoteCountsJob
-    queue: default
-    args: 1
-    schedule: every 50 seconds
+# development:
+#   broadcast_votes_count:
+#     class: BroadcastVoteCountsJob
+#     queue: real_time
+#     args: 1
+#     schedule: every 50 seconds

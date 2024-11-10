@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class BroadcastVoteCountsJob < ApplicationJob
-  queue_as :default
+  queue_as :real_time
 
   def perform(election_id)
     election = Election.preload(:candidates).find(election_id)

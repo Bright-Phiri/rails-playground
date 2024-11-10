@@ -7,7 +7,7 @@ class Vote < ApplicationRecord
 
   validates :voter_id, uniqueness: { scope: [:candidate_id, :election_id] }
 
-  #after_create_commit :broadcast_vote_counts
+  after_create_commit :broadcast_vote_counts
 
   private
 
