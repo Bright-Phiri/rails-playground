@@ -8,7 +8,6 @@ default: &default
   username: postgres
   password: root
 
-
 development:
   primary:
     <<: *default
