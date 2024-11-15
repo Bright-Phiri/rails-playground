@@ -5,7 +5,7 @@ module ExceptionHandler
 
   # Custom Exceptions
   class InvalidUsername < StandardError
-    def initialize(msg = 'Username not found')
+    def initialize(msg = "Username not found")
       super
     end
   end
@@ -29,31 +29,31 @@ module ExceptionHandler
   end
 
   class NotAuthorized < StandardError
-    def initialize(msg = 'You are not authorized to perform this action.')
+    def initialize(msg = "You are not authorized to perform this action.")
       super
     end
   end
 
   class InvalidCredentials < StandardError
-    def initialize(msg = 'Invalid credentials.')
+    def initialize(msg = "Invalid credentials.")
       super
     end
   end
 
   class VotingNotStartedError < StandardError
-    def initialize(msg = 'Voting has not started yet.')
+    def initialize(msg = "Voting has not started yet.")
       super
     end
   end
 
   class VotingEndedError < StandardError
-    def initialize(msg = 'Voting has ended for this election.')
+    def initialize(msg = "Voting has ended for this election.")
       super
     end
   end
 
   class AlreadyVotedError < StandardError
-    def initialize(msg = 'You have already voted for this candidate in this election.')
+    def initialize(msg = "You have already voted for this candidate in this election.")
       super
     end
   end
@@ -70,14 +70,16 @@ module ExceptionHandler
     end
 
     rescue_from ActiveRecord::RecordNotFound do
-      render json: { error: 'Record not found' }, status: :not_found
+      render json: { error: "Record not found" }, status: :not_found
     end
 
-    rescue_from InvalidUsername, InvalidEmail, CandidateAlreadyRegisteredError, AlreadyVotedForPositionError  do |exception|
+    rescue_from InvalidUsername, InvalidEmail, CandidateAlreadyRegisteredError,
+                AlreadyVotedForPositionError do |exception|
       render json: { error: exception.message }, status: :unprocessable_entity
     end
 
-    rescue_from ActiveRecord::RecordNotSaved, ActiveRecord::RecordInvalid, ActiveRecord::RecordNotDestroyed do |exception|
+    rescue_from ActiveRecord::RecordNotSaved, ActiveRecord::RecordInvalid,
+                ActiveRecord::RecordNotDestroyed do |exception|
       render json: { error: exception.record.errors.full_messages }, status: :unprocessable_entity
     end
 

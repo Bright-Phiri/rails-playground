@@ -13,8 +13,6 @@ module VoteService
     election.votes.create(voter: voter, candidate: candidate)
   end
 
-  private_class_method
-
   def self.check_voting_status!(election)
     case election.voting_status
     when :not_started
@@ -25,16 +23,15 @@ module VoteService
   end
 
   def self.validate_voting_authorization!(voter, candidate)
-    raise ExceptionHandler::VoterNotAuthorized, 'Voter is voided' if voter.is_voided?
-    raise ExceptionHandler::CandidateNotAuthorized, 'Candidate is voided' if candidate.is_voided?
+    raise ExceptionHandler::VoterNotAuthorized, "Voter is voided" if voter.is_voided?
+    raise ExceptionHandler::CandidateNotAuthorized, "Candidate is voided" if candidate.is_voided?
   end
 
   def self.check_duplicate_vote!(voter, election, candidate)
-    if candidate.votes.exists?(voter_id: voter.id, election_id: election.id)
-      raise ExceptionHandler::AlreadyVotedError
-    end
+    raise ExceptionHandler::AlreadyVotedError if candidate.votes.exists?(voter_id: voter.id, election_id: election.id)
 
-    if voter.votes.joins(candidate: :position).where(election_id: election.id, positions: { id: candidate.position_id }).exists?
+    if voter.votes.joins(candidate: :position).where(election_id: election.id,
+                                                     positions: { id: candidate.position_id }).exists?
       raise ExceptionHandler::AlreadyVotedForPositionError.new(candidate.position.name)
     end
   end

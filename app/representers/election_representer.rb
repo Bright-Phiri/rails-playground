@@ -14,7 +14,7 @@ class ElectionRepresenter
       end_time: election.end_time,
       total_candidates: election.candidates_count,
       total_votes: election.votes_count,
-      candidates: CandidatesRepresenter.new(election.candidates).as_json,
+      candidates: CandidatesRepresenter.new(election.candidates).as_json
     }
   end
 

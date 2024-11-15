@@ -11,6 +11,6 @@ class VotesChannel < ApplicationCable::Channel
   end
 
   def receive(data)
-    BroadcastVoteCountsJob.perform_later(data['election_id'])
+    BroadcastVoteCountsJob.perform_later(data["election_id"])
   end
 end

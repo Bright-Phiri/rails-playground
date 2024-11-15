@@ -1,0 +1,50 @@
+# Want to disable a check for a specific case? To disable checks inline:
+# http://docs.rubocop.org/en/latest/configuration/#disabling-cops-within-source-code
+
+# .rubocop.yml
+
+require:
+  - rubocop-rails
+
+AllCops:
+  TargetRubyVersion: 3.1
+  SuggestExtensions: false
+  Exclude:
+    - "db/schema.rb"         # Excluding specific files
+    - "bin/**/*"
+    - "node_modules/**/*"     # Exclude node_modules if using JavaScript libraries
+    - "log/**/*"              # Exclude logs for cleaner analysis
+    - "tmp/**/*"              # Temporary files exclusion
+  
+Metrics/LineLength:
+  Max: 120                   # Adjust line length if preferred
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes # or you can disable it if not needed
+
+# Enable or adjust specific Rails cops
+Rails:
+  Enabled: true
+
+# Custom configuration for specific cops
+Style/FrozenStringLiteralComment:
+  Enabled: true             # Disable frozen string literal requirement
+
+Metrics/MethodLength:
+  Max: 10                    # Limit method length to 10 lines
+
+Metrics/BlockLength:
+  Max: 15                    # Limit block length for readability
+
+Layout/IndentationWidth:
+  Width: 2                   # Set default indentation width to 2 spaces
+
+Lint/UnusedMethodArgument:
+  Enabled: true              # Warn on unused method arguments
+  AllowUnusedKeywordArguments: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+# To disable checks inline for specific cases, refer to:
+# http://docs.rubocop.org/en/latest/configuration/#disabling-cops-within-source-code

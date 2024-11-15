@@ -22,7 +22,7 @@ Rails.application.configure do
   else
     config.action_controller.perform_caching = false
   end
-  Rails.application.routes.default_url_options[:host] = 'localhost:4000'
+  Rails.application.routes.default_url_options[:host] = "localhost:4000"
   config.active_job.queue_adapter = :solid_queue
   config.solid_queue.connects_to = { database: { writing: :queue } }
   # Change to :null_store to avoid any caching.
