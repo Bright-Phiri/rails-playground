@@ -17,9 +17,9 @@ class BroadcastVoteCountsJob < ApplicationJob
 
     # Broadcast updated vote counts for each position
     VotesChannel.broadcast_to(election, {
-                                message: "Vote successfully cast",
-                                election_name: election.name,
-                                vote_counts_by_position: vote_counts_by_position
-                              })
+      message: "Vote successfully cast",
+      election_name: election.name,
+      vote_counts_by_position: vote_counts_by_position
+    })
   end
 end
