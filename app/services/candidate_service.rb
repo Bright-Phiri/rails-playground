@@ -7,8 +7,7 @@ module CandidateService
 
     existing_candidate = election.candidates.find_by(name: params[:name], position_id: position.id)
     unless existing_candidate.nil?
-      raise ExceptionHandler::CandidateAlreadyRegisteredError.new(existing_candidate.name,
-                                                                  position.name)
+      raise ExceptionHandler::CandidateAlreadyRegisteredError.new(existing_candidate.name, position.name)
     end
 
     election.candidates.create(params.merge(position_id: position.id))
